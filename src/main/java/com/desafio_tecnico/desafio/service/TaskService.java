@@ -1,0 +1,76 @@
+package com.desafio_tecnico.desafio.service;
+
+import com.desafio_tecnico.desafio.dto.CreateTaskRequest;
+import com.desafio_tecnico.desafio.dto.UpdateTaskStatusRequest;
+import com.desafio_tecnico.desafio.entity.Project;
+import com.desafio_tecnico.desafio.entity.Task;
+import com.desafio_tecnico.desafio.entity.enums.Priority;
+import com.desafio_tecnico.desafio.entity.enums.TaskStatus;
+import com.desafio_tecnico.desafio.repository.ProjectRepository;
+import com.desafio_tecnico.desafio.repository.TaskRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Transactional
+public class TaskService {
+
+    private final TaskRepository taskRepository;
+    private final ProjectRepository projectRepository;
+
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository) {
+        this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
+    }
+
+    public Task createTask(CreateTaskRequest request) {
+        Project project = projectRepository.findById(request.projectId())
+                .orElseThrow(() -> new ProjectNotFoundException("Projeto não foi encontrado"));
+
+        Task task = new Task();
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        task.setStatus(request.status() != null ? request.status() : TaskStatus.TODO);
+        task.setPriority(request.priority() != null ? request.priority() : Priority.LOW);
+        task.setDueDate(request.dueDate());
+        task.setProject(project);
+
+        return taskRepository.save(task);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Task> findTasks(TaskStatus status, Priority priority, UUID projectId) {
+        if (status != null && priority != null && projectId != null) {
+            return taskRepository.findByStatusAndPriorityAndProjectId(status, priority, projectId);
+        } else if (status != null && projectId != null) {
+            return taskRepository.findByStatusAndProjectId(status, projectId);
+        } else if (priority != null && projectId != null) {
+            return taskRepository.findByPriorityAndProjectId(priority, projectId);
+        } else if (projectId != null) {
+            return taskRepository.findByProjectId(projectId);
+        } else if (status != null) {
+            return taskRepository.findByStatus(status);
+        } else if (priority != null) {
+            return taskRepository.findByPriority(priority);
+        } else {
+            return taskRepository.findAll();
+        }
+    }
+
+    public Task updateTaskStatus(UUID id, UpdateTaskStatusRequest request) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada"));
+        task.setStatus(request.status());
+        return taskRepository.save(task);
+    }
+
+    public void deleteTask(UUID id) {
+        if (!taskRepository.existsById(id)) {
+            throw new TaskNotFoundException("Tarefa não encontrada");
+        }
+        taskRepository.deleteById(id);
+    }
+}
