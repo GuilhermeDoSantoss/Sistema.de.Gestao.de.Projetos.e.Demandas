@@ -6,10 +6,14 @@ import com.desafio_tecnico.desafio.entity.Project;
 import com.desafio_tecnico.desafio.entity.Task;
 import com.desafio_tecnico.desafio.entity.enums.Priority;
 import com.desafio_tecnico.desafio.entity.enums.TaskStatus;
+import com.desafio_tecnico.desafio.exception.ProjectNotFoundException;
+import com.desafio_tecnico.desafio.exception.TaskNotFoundException;
 import com.desafio_tecnico.desafio.repository.ProjectRepository;
 import com.desafio_tecnico.desafio.repository.TaskRepository;
-import jakarta.transaction.Transactional;
+
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +32,7 @@ public class TaskService {
 
     public Task createTask(CreateTaskRequest request) {
         Project project = projectRepository.findById(request.projectId())
-                .orElseThrow(() -> new ProjectNotFoundException("Projeto não foi encontrado"));
+                .orElseThrow(() -> new ProjectNotFoundException("Projeto não encontrado com ID: " + request.projectId()));
 
         Task task = new Task();
         task.setTitle(request.title());
@@ -43,6 +47,7 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public List<Task> findTasks(TaskStatus status, Priority priority, UUID projectId) {
+        // Mantido por simplicidade, mas considere usar Specifications no futuro
         if (status != null && priority != null && projectId != null) {
             return taskRepository.findByStatusAndPriorityAndProjectId(status, priority, projectId);
         } else if (status != null && projectId != null) {
@@ -62,15 +67,15 @@ public class TaskService {
 
     public Task updateTaskStatus(UUID id, UpdateTaskStatusRequest request) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada"));
+                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada com ID: " + id));
         task.setStatus(request.status());
         return taskRepository.save(task);
     }
 
     public void deleteTask(UUID id) {
-        if (!taskRepository.existsById(id)) {
-            throw new TaskNotFoundException("Tarefa não encontrada");
-        }
-        taskRepository.deleteById(id);
+        // Simplificado: basta tentar buscar e deletar
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Tarefa não encontrada com ID: " + id));
+        taskRepository.delete(task);
     }
 }

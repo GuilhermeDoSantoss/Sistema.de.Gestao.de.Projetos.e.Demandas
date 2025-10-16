@@ -3,8 +3,8 @@ package com.desafio_tecnico.desafio.service;
 import com.desafio_tecnico.desafio.dto.CreateProjectRequest;
 import com.desafio_tecnico.desafio.entity.Project;
 import com.desafio_tecnico.desafio.repository.ProjectRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
