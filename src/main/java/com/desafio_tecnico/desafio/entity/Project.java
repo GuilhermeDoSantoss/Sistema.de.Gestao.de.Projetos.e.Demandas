@@ -33,5 +33,7 @@ public class Project {
 
     private LocalDate endDate;
 
+    public Project(String test, Object o, LocalDate now, Object o1) {
+    }
 }
 

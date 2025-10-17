@@ -51,6 +51,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
         log.error("Erro não tratado na API", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse("ERRO_INTERNO", "Ocorreu um erro inesperado. Tente novamente mais tarde."));
+                .body(new ErrorResponse("ERRO_INTERNO", "Ocorreu um erro. Tente novamente mais tarde."));
     }
 }
