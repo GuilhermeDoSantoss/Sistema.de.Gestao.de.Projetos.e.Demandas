@@ -16,12 +16,12 @@ public record CreateProjectRequest(
         @NotNull LocalDate startDate,
         LocalDate endDate
 ) {
-    // Example of a custom validation method (if using Bean Validation 2.0+)
-    // Uncomment if you want to enforce endDate > startDate
-    /*
-    @AssertTrue(message = "End date must be after start date")
+    // Exemplo de metodo de validação customizado (se estiver usando Bean Validation 2.0+)
+// Descomente se quiser garantir que endDate > startDate
+/*
+    @AssertTrue(message = "A data de término deve ser posterior à data de início")
     public boolean isEndDateValid() {
-        return endDate == null || endDate.isAfter(startDate);
-    }
-    */
+    return endDate == null || endDate.isAfter(startDate);
+}
+*/
 }

@@ -8,8 +8,8 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
- * DTO for creating a new Task.
- * Ensures required fields are present and valid.
+ * DTO para criação de uma nova Tarefa.
+ * Garante que os campos obrigatórios estejam presentes e válidos.
  */
 public record CreateTaskRequest(
         @NotBlank @Size(min = 5, max = 150) String title,
@@ -17,14 +17,14 @@ public record CreateTaskRequest(
         TaskStatus status,
         Priority priority,
         LocalDate dueDate,
-        java.util.UUID projectId // Consider using UUID and/or custom validation
+        java.util.UUID projectId // Considere usar UUID e/ou validação customizada
 ) {
-    // Example of a custom validation method (if using Bean Validation 2.0+)
-    // Uncomment if you want to enforce dueDate >= today
+    // Exemplo de metodo de validação customizado (se estiver usando Bean Validation 2.0+)
+    // Descomente se quiser garantir que dueDate >= hoje
     /*
-    @AssertTrue(message = "Due date must not be in the past")
-    public boolean isDueDateValid() {
-        return dueDate == null || !dueDate.isBefore(LocalDate.now());
-    }
-    */
+        @AssertTrue(message = "A data de vencimento não pode ser no passado")
+        public boolean isDueDateValid() {
+            return dueDate == null || !dueDate.isBefore(LocalDate.now());
+}
+*/
 }

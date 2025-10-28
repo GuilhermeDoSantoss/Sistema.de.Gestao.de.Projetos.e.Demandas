@@ -10,6 +10,6 @@ import java.util.List;
  */
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
-    // Exemplo de método customizado:
+    // Exemplo de metodo customizado:
     // List<Project> findByName(String name);
 }

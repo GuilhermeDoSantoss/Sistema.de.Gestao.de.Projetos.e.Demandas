@@ -29,7 +29,7 @@ public class TaskService {
     }
 
     public Task createTask(CreateTaskRequest request) {
-        Project project = projectRepository.findById(request.projectId())
+        Project project = projectRepository.findById(String.valueOf(request.projectId()))
                 .orElseThrow(() -> new ProjectNotFoundException("Projeto não encontrado com ID: " + request.projectId()));
 
         Task task = new Task();

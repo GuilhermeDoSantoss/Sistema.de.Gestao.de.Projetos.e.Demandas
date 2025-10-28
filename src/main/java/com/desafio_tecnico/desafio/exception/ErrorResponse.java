@@ -1,9 +1,9 @@
 package com.desafio_tecnico.desafio.exception;
 
 /**
- * Represents a standardized error response for API endpoints.
+ * Representa uma resposta de erro padronizada para endpoints da API.
  *
- * @param code    a machine-readable error code
- * @param message a human-readable error message
+ * param code    um código de erro legível por máquina
+ * param message uma mensagem de erro legível por humanos
  */
 public record ErrorResponse(String code, String message) {}

@@ -4,8 +4,8 @@ import com.desafio_tecnico.desafio.entity.enums.TaskStatus;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * DTO for updating the status of a Task.
- * Ensures that a non-null status is provided.
+ * DTO para atualização do status de uma Tarefa.
+ * Garante que um status não nulo seja fornecido.
  */
 public record UpdateTaskStatusRequest(
         @NotNull TaskStatus status

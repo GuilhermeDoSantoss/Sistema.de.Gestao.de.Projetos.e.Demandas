@@ -18,9 +18,9 @@ public interface TaskMapper {
 
     /**
      * Atualiza uma entidade Task existente com dados de UpdateTaskStatusRequest.
-     * @param dto DTO com os dados de atualização
-     * @param task Entidade Task a ser atualizada
-     * @return Task atualizada
+     * param dto DTO com os dados de atualização
+     * param task Entidade Task a ser atualizada
+     * return Task atualizada
      */
     Task toEntity(UpdateTaskStatusRequest dto, @MappingTarget Task task);
 }

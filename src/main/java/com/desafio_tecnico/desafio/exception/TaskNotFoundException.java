@@ -6,7 +6,7 @@ package com.desafio_tecnico.desafio.exception;
 public class TaskNotFoundException extends RuntimeException {
   /**
    * Cria uma nova exceção com a mensagem especificada.
-   * @param message Mensagem descritiva do erro.
+   * param message Mensagem descritiva do erro.
    */
   public TaskNotFoundException(String message) {
     super(message);
@@ -14,8 +14,8 @@ public class TaskNotFoundException extends RuntimeException {
 
   /**
    * Cria uma nova exceção com a mensagem e a causa especificadas.
-   * @param message Mensagem descritiva do erro.
-   * @param cause Causa raiz da exceção.
+   * param message Mensagem descritiva do erro.
+   * param cause Causa raiz da exceção.
    */
   public TaskNotFoundException(String message, Throwable cause) {
     super(message, cause);

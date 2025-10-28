@@ -11,8 +11,8 @@ import org.mapstruct.Mapper;
 public interface ProjectMapper {
     /**
      * Converte um DTO de criação de projeto em uma entidade Project.
-     * @param dto DTO de criação de projeto
-     * @return Entidade Project
+     * param dto DTO de criação de projeto
+     * return Entidade Project
      */
     Project toEntity(CreateProjectRequest dto);
 }
