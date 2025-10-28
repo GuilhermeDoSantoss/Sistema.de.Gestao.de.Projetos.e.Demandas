@@ -2,7 +2,6 @@ package com.desafio_tecnico.desafio.entity;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,8 +18,8 @@ import lombok.*;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id = UUID.randomUUID();
+    @Column(length = 36)
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 100)
@@ -35,5 +34,12 @@ public class Project {
 
     public Project(String test, Object o, LocalDate now, Object o1) {
     }
-}
 
+    // Gera o ID automaticamente antes de persistir, se não estiver setado
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
+}

@@ -5,13 +5,22 @@ import com.desafio_tecnico.desafio.dto.UpdateTaskStatusRequest;
 import com.desafio_tecnico.desafio.entity.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
+/**
+ * Mapper para conversão entre DTOs de Task e a entidade Task.
+ */
 @Mapper(componentModel = "spring", uses = ProjectMapper.class)
 public interface TaskMapper {
-
-    TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
-
+    /**
+     * Converte um CreateTaskRequest em uma entidade Task.
+     */
     Task toEntity(CreateTaskRequest dto);
-    Task toEntity(UpdateTaskStatusRequest dto, @MappingTarget Task task); //MappingTarget permite atualizar uma entidade (útil no PUT)
+
+    /**
+     * Atualiza uma entidade Task existente com dados de UpdateTaskStatusRequest.
+     * @param dto DTO com os dados de atualização
+     * @param task Entidade Task a ser atualizada
+     * @return Task atualizada
+     */
+    Task toEntity(UpdateTaskStatusRequest dto, @MappingTarget Task task);
 }

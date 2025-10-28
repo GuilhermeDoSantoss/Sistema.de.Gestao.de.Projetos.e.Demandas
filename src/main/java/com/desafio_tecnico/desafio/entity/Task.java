@@ -5,10 +5,7 @@ import com.desafio_tecnico.desafio.entity.enums.TaskStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,7 +21,8 @@ import java.util.UUID;
 public class Task {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @Column(length = 36)
+    private String id;
 
     @NotBlank
     @Size(min = 5, max = 150)
@@ -32,9 +30,11 @@ public class Task {
 
     private String description;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private TaskStatus status = TaskStatus.TODO;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Priority priority = Priority.LOW;
 
@@ -44,4 +44,11 @@ public class Task {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    // Gera o ID automaticamente antes de persistir, se não estiver setado
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 }

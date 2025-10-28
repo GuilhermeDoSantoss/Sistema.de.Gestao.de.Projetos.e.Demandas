@@ -7,15 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * Repositório para operações CRUD e consultas customizadas de Task.
+ */
 @Repository
-public interface TaskRepository extends JpaRepository<Task, UUID> {
+public interface TaskRepository extends JpaRepository<Task, String> {
     List<Task> findByStatus(TaskStatus status);
     List<Task> findByPriority(Priority priority);
-    List<Task> findByProjectId(UUID projectId);
+    List<Task> findByProjectId(String projectId);
     List<Task> findByStatusAndPriority(TaskStatus status, Priority priority);
-    List<Task> findByStatusAndPriorityAndProjectId(TaskStatus status, Priority priority, UUID projectId);
-    List<Task> findByStatusAndProjectId(TaskStatus status, UUID projectId);
-    List<Task> findByPriorityAndProjectId(Priority priority, UUID projectId);
+    List<Task> findByStatusAndPriorityAndProjectId(TaskStatus status, Priority priority, String projectId);
+    List<Task> findByStatusAndProjectId(TaskStatus status, String projectId);
+    List<Task> findByPriorityAndProjectId(Priority priority, String projectId);
 }

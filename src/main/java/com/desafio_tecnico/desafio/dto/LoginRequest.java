@@ -1,4 +1,12 @@
 package com.desafio_tecnico.desafio.dto;
 
-public record LoginRequest(String username, String password) {
-}
+import jakarta.validation.constraints.NotBlank;
+
+/**
+ * DTO para requisição de login.
+ * Garante que username e password não sejam vazios.
+ */
+public record LoginRequest(
+        @NotBlank String username,
+        @NotBlank String password
+) {}
